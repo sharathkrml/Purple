@@ -1,7 +1,8 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.password_validation import validate_password
 from django.core.validators import validate_email
 from Account.models import CustomUser
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
@@ -29,6 +30,7 @@ def login(request):
                 if user != None:
                     if(user.check_password(login_password)):
                         user_login(request, user)
+                        return redirect('account')
                 else:
                     messages.warning(request, f'Invalid Credentials')
                     return render(request, 'Account/login_or_signup.html', {'title': 'Login', 'login_data': login_data})
@@ -38,6 +40,8 @@ def login(request):
                     request, phone=login_phone_or_email, password=login_password)
                 if user != None:
                     user_login(request, user)
+                    return redirect('account')
+
                 else:
                     messages.warning(request, f'Invalid Credentials')
                     return render(request, 'Account/login_or_signup.html', {'title': 'Login', 'login_data': login_data})
@@ -77,7 +81,7 @@ def login(request):
                             user.set_password(register_password)
                             user.save()
                             user_login(request, user)
-                            return redirect('login')
+                            return redirect('account')
 
             else:
                 messages.warning(request, f'Enter a valid phone number')
@@ -88,3 +92,33 @@ def login(request):
 def logout(request):
     user_logout(request)
     return redirect('login')
+
+
+@csrf_exempt
+@login_required
+def account(request):
+    if(request.method == "POST"):
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        if(name and email and phone):
+            similar_email = len(CustomUser.objects.filter(email=email))
+            similar_phone = len(CustomUser.objects.filter(phone=phone))
+            if(validate_phone(phone)):
+                # email received and current user email not same and there are other objects with same email
+                if(request.user.email != email and similar_email != 0):
+                    return JsonResponse({'message': 'Email Already in Use', 'success': False})
+                if(request.user.phone != phone and similar_phone != 0):
+                    return JsonResponse({'message': 'Phone Already in Use', 'success': False})
+                request.user.email = email
+                request.user.phone = phone
+                request.user.name = name
+                request.user.save()
+                print('{}-{}-{}'.format(request.user.email,
+                                        request.user.name, request.user.phone))
+                return JsonResponse({'message': 'Profile Updated', 'success': True})
+            else:
+                return JsonResponse({'message': 'Invalid Phone', 'success': False})
+        else:
+            return JsonResponse({'message': 'Enter all details', 'success': False})
+    return render(request, 'Account/myaccount.html', {'title': request.user.name})

@@ -1,0 +1,298 @@
+
+        {% extends 'Account/base.html' %}
+        {% block content %}
+        
+        <!------------------------------ customer details------------------------------>
+		<div class="main-container">
+		<span class="account-header">My Account</span>
+		<div class="category-row">
+		<div class="account">	
+		<ul class="account-category">
+			<li id="option1" onclick="btn1()">
+				<div class="category-list">
+					<span class="category-list-item">Personal</span>
+				</div>
+			</li>
+			<li onclick="btn2()" id="option2">
+				<div class="category-list">
+					<span class="category-list-item">Addresses</span>
+				</div>
+			</li>
+			<li onclick="btn3()" id="option3">
+				<div class="category-list">
+					<span class="category-list-item">My Orders</span>
+				</div>
+			</li>
+			
+		</ul>
+	   </div>
+       <div class="details-container">
+		<div id="div1" class="list-content">
+            
+             <div class="first_row">
+				<div class="third_category">
+					<span class="category_name">Name</span>
+					<input id='user_name' class="account_input" value='{{user.name}}' type="text">
+				</div>
+			</div>
+			<div class="first_row">
+				<div class="third_category">
+					<span class="category_name">Email</span>
+					<input id='user_email' class="account_input" value='{{user.email}}' type="email">
+				</div>
+            </div>
+			<div class="first_row">
+				<div class="third_category">
+					<span class="category_name">Phone Number</span>
+					<input id='user_phone' class="account_input" value='{{user.phone}}' type="text">
+				</div>
+            </div>
+				<button onclick="edituserdetails()" class="account-button">Save &#8594;</button>
+		    </div>
+            <script>
+                user_url="{% url 'account' %}"
+                
+                function edituserdetails(){
+                    user_name=document.getElementById('user_name').value
+                    user_email=document.getElementById('user_email').value
+                    user_phone=document.getElementById('user_phone').value
+                    if((user_name=='{{user.name}}') && user_email=='{{user.email}}' && user_email=='{{user.phone}}'){
+                        console.log(user_name,user_email,user_email)
+                        console.log('no changes')
+                    }else{
+                        data={'name':user_name,'email':user_email,'phone':user_phone}
+                        console.log(data)
+                        $.ajax({
+                            url:user_url,
+                            type:'post',
+                            data:{
+                                'name':user_name,
+                                'email':user_email,
+                                'phone':user_phone
+                            },success:function(res){
+                                document.getElementById('modelmessage').innerHTML=res.message
+                                if(res.success){
+                                    document.getElementById('trueimage').style.display='block'
+                                    document.getElementById('falseimage').style.display='none'
+                                }else{
+                                    document.getElementById('trueimage').style.display='none'
+                                    document.getElementById('falseimage').style.display='block'
+                                }
+                                $("#exampleModalCenter").modal();
+                            }
+                        })
+                    }
+                }
+            </script>
+        <div id="div2" class="cat-content">
+            <ul class="address-list" id="addresses">
+                <li id="add_address" onclick="input_toggle()"> 
+                    <div onclick="input_toggle()" class="add-address">
+                    <span onclick="input_toggle()">Add address</span>
+
+                </div>
+            </li>
+            
+               <li > <div class="address1">
+                    <span class="address-1">Address-1</span>
+                    <div  class="division"></div>
+                    <span class="address-name">Name</span>
+                    <span class="address-flat">Flat</span>
+                    <span class="address-locality">Place</span>
+                    <span class="address-locality">State</span>
+                    <span class="address-pin">PIN</span>
+                    <span class="address-phone">Phone</span>
+                    <div class="address-buttons">
+                        <button>edit</button>
+                        <button>Remove</button>
+                    </div>
+
+                </div>
+            </li>
+
+            
+              
+           
+        </ul>
+            </div>
+            <div class="address-input" id="div3">
+            <div class="add-name">
+                <span class="name-title">Name</span>
+                <input class="inputs" type="text">
+            </div>
+            <div class="add-flat">
+                <span class="add-flatno">Flat Number</span>
+                <input class="inputs" type="text">
+            </div>
+            <div class="add-area">
+                <span class="add-area">Locality</span>
+                <input class="inputs" type="text">
+            </div>
+            <div class="add-state">
+                <span class="add-state">State</span>
+                <input class="inputs" type="text">
+            </div>
+            <div class="add-pin">
+                <span class="add-pincode">PIN</span>
+                <input class="inputs" type="text">
+            </div>
+            <div class="add-mob">
+                <span class="add-mob">Phone Number</span>
+                <input class="inputs" type="text">
+            </div>    
+            <button onclick="save()">save</button>
+            </div>
+            
+            </div>
+            <div class="cartContent" id="cart-content">
+                <table >
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Subtotal</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="cart-info">
+                                <img src="https://cdn.igp.com/f_auto,q_auto,t_prodm/products/p-personalized-love-you-box-for-anniversary-133462-m.jpg">
+                                <div>
+                                    <p>Red Printed T-Shirt</p>
+                                    <small>Price: $50.00</small><br>
+                                    <a href="">Remove</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td><input type="number" value="1"></td>
+                        <td>$50.00</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="cart-info">
+                                <img src="https://stylesatlife.com/wp-content/uploads/2018/05/Bunch-of-Gourmets-Birthday-Gifts.jpeg">
+                                <div>
+                                    <p>Red Printed T-Shirt</p>
+                                    <small>Price: $50.00</small><br>
+                                    <a href="">Remove</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td><input type="number" value="1"></td>
+                        <td>$50.00</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="cart-info">
+                                <img src="https://5.imimg.com/data5/TV/LU/KF/SELLER-11481305/wedding-anniversary-engraved-crystal-photo-frame-500x500.JPG">
+                                <div>
+                                    <p>Red Printed T-Shirt</p>
+                                    <small>Price: $50.00</small><br>
+                                    <a href="">Remove</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td><input type="number" value="1"></td>
+                        <td>$50.00</td>
+                    </tr>
+                    </table>
+            </div>
+		</div>
+        <div class="secondContainer">
+        </div>
+    </div>
+		</div>
+                <!-----------------------------------js for toggle menu-------------------------------------->
+        <script>
+            var menuItems=document.getElementById("MenuItems");
+            
+            MenuItems.style.maxHeight="0px";
+            function menutoggle(){
+                if(MenuItems.style.maxHeight == "0px"){
+                    MenuItems.style.maxHeight="200px";
+                }
+                else{
+                    MenuItems.style.maxHeight="0px";
+                }
+            }
+
+          var div1 = document.getElementById('div1');
+          var div2 = document.getElementById('div2');
+          var div3 = document.getElementById('div3');
+          var addresses = document.getElementById('addresses')
+          var cart = document.getElementById("cart-content");
+            function btn1(){
+               if( div1.style.visibility == "visible"){
+                
+                div2.style.visibility = "hidden";
+                addresses.style.visibility = "hidden";
+                cart.style.visibility = "hidden";
+
+               }
+               else {
+                div1.style.visibility = "visible";
+                div2.style.visibility = "hidden";
+                addresses.style.visibility = "hidden";
+                cart.style.visibility = "hidden";
+
+
+               }
+               
+            }
+            function btn2(){
+                if( div2.style.visibility == "visible"){
+                 
+                 cart.style.visibility = "hidden";
+
+
+
+                }
+                else {
+                 div2.style.visibility = "visible";
+                 div1.style.visibility = "hidden";
+                 addresses.style.visibility = "visible";
+                 cart.style.visibility = "hidden";
+
+
+
+                }
+                
+             }
+
+             function btn3(){
+                if(cart.style.visibility = "hidden"){
+                 cart.style.visibility = "visible";
+                 div2.style.visibility = "hidden";
+                 div1.style.visibility = "hidden";
+                 addresses.style.visibility = "hidden";
+                 div3.style.visibility = "hidden";
+
+                }
+                else {
+                 cart.style.visibility = "hidden";
+                 div2.style.visibility = "hidden";
+                 div1.style.visibility = "hidden";
+                 addresses.style.visibility = "hidden";
+                 div3.style.visibility = "hidden";
+
+                }
+                
+             }
+
+             function input_toggle(){
+                if( div3.style.visibility == "visible"){
+                    div3.style.visibility = "hidden";
+                    addresses.style.visibility = "visible";
+
+                }
+                else {
+                    div3.style.visibility = "visible";
+                    addresses.style.visibility = "hidden";
+                }
+             }
+             function save(){
+                div3.style.visibility = "hidden";
+                addresses.style.visibility = "visible";
+             }
+            
+               
+        </script>
+ {% endblock %}

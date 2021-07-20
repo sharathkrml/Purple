@@ -16,9 +16,12 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
         <!--added a cdn link by searching font awesome4 cdn and getting this link from https://www.bootstrapcdn.com/fontawesome/ this url*/-->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="{% static 'Account/jquery3.6.0.js' %}"></script>
 
     </head>
     <body>
+
+        
         <!--<div class ="header">-->
         <div class="container">
             <div class="navbar">
@@ -57,6 +60,8 @@
            
         </div>
     <!--</div>-->
+
+    
     
             {% if messages %}
               {% for message in messages %}
@@ -77,7 +82,29 @@
                     <p>The true value of a gift is the sentiment begind the gifting.</p>
                 </div>
                 
-                
+                <!------ modal begins ------>
+
+
+                                
+                                
+                                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                      <div class="modal-content">
+                                        <div class="modal-header">
+                                         <div class="column">
+                                        <div class="modal-body">
+                                            <span id="modelmessage" class="msg"></span>
+                                            <img id='trueimage' src="https://image.flaticon.com/icons/png/512/711/711239.png" alt="" width="70px" height="70px" class="success-logo">
+                                            <img id='falseimage' src="https://img-premium.flaticon.com/png/512/1008/premium/1008968.png?token=exp=1626765388~hmac=71a7af57ee0b205df3ba032cb9fea40d" alt="" width="70px" height="70px" class="success-logo">
+                                        </div>
+                                        <div class="modal-footer">
+                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div> 
+                                      </div>
+                                    </div>
+                                  </div>
+                                <!-- modal ends -->
                 
             </div>
             
@@ -103,8 +130,6 @@
                 }
             }
         </script>
-        
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     </body>
