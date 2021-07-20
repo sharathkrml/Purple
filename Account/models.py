@@ -52,3 +52,16 @@ class CustomUser(AbstractUser):
     REQUIRED_FIELDS = ['email', 'name']
 
     objects = CustomUserManager()
+
+
+class Address(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    fullname = models.CharField(max_length=50)
+    mobile_no = models.CharField(max_length=12)
+    pin_code = models.CharField(max_length=10)
+    building_details = models.CharField(max_length=140)
+    locality_details = models.CharField(max_length=140)
+    state = models.CharField(max_length=140)
+
+    def __str__(self):
+        return self.fullname

@@ -92,55 +92,172 @@
 
                 </div>
             </li>
-            
-               <li > <div class="address1">
-                    <span class="address-1">Address-1</span>
-                    <div  class="division"></div>
-                    <span class="address-name">Name</span>
-                    <span class="address-flat">Flat</span>
-                    <span class="address-locality">Place</span>
-                    <span class="address-locality">State</span>
-                    <span class="address-pin">PIN</span>
-                    <span class="address-phone">Phone</span>
-                    <div class="address-buttons">
-                        <button>edit</button>
-                        <button>Remove</button>
-                    </div>
-
-                </div>
-            </li>
-
-            
-              
-           
         </ul>
             </div>
             <div class="address-input" id="div3">
             <div class="add-name">
                 <span class="name-title">Name</span>
-                <input class="inputs" type="text">
-            </div>
-            <div class="add-flat">
-                <span class="add-flatno">Flat Number</span>
-                <input class="inputs" type="text">
-            </div>
-            <div class="add-area">
-                <span class="add-area">Locality</span>
-                <input class="inputs" type="text">
-            </div>
-            <div class="add-state">
-                <span class="add-state">State</span>
-                <input class="inputs" type="text">
-            </div>
-            <div class="add-pin">
-                <span class="add-pincode">PIN</span>
-                <input class="inputs" type="text">
+                <input id='fullname' class="inputs" type="text">
             </div>
             <div class="add-mob">
                 <span class="add-mob">Phone Number</span>
-                <input class="inputs" type="text">
-            </div>    
-            <button onclick="save()">save</button>
+                <input id='mobile_no' class="inputs" type="text">
+            </div> 
+            <div class="add-area">
+                <span class="add-flatno">Building Details</span>
+                <input id='building_details'class="inputs" type="text">
+            </div>
+            <div class="add-area">
+                <span class="add-area">Locality Details</span>
+                <input id='locality_details' class="inputs" type="text">
+            </div>
+            <div class="add-state">
+                <span class="add-state">State</span>
+                <input id='state' class="inputs" type="text">
+            </div>
+            <div class="add-area">
+                <span class="add-pincode">PIN</span>
+                <input id='pin_code' class="inputs" type="text">
+            </div>
+               <button id='savebutton' onclick="addaddress()">Save</button>
+               <script>
+                   address_url="{% url 'address' %}"
+                   editaddress_url="{% url 'editaddress' %}"
+                    function deleteaddress(id){
+                        $('.generated').remove();
+                        $.ajax({
+                            url:editaddress_url,
+                            type:'POST',
+                            data:{'delete_id':id},
+                            success:function(res){
+                                getaddress()
+                                document.getElementById('modelmessage').innerHTML=res.message
+                                if(res.success){
+                                    document.getElementById('trueimage').style.display='block'
+                                    document.getElementById('falseimage').style.display='none'
+                                }else{
+                                    document.getElementById('trueimage').style.display='none'
+                                    document.getElementById('falseimage').style.display='block'
+                                }
+                                $("#exampleModalCenter").modal();
+                                console.log(res)
+                        }
+                    })
+                }
+                    function saveeditedaddress(id){
+                        document.getElementById('savebutton').setAttribute('onclick','addaddress()')
+                        console.log(document.getElementById('savebutton').getAttribute('onclick'))
+                       $('.generated').remove();
+                        $.ajax({
+                            url:editaddress_url,
+                            type:'POST',
+                            data:{
+                                'edit_id':id,
+                                'fullname':document.getElementById('fullname').value,
+                                'mobile_no':document.getElementById('mobile_no').value,
+                                'pin_code':document.getElementById('pin_code').value,
+                                'building_details':document.getElementById('building_details').value,
+                                'locality_details':document.getElementById('locality_details').value,
+                                'state':document.getElementById('state').value,
+                            },
+                            success:function(res){
+                                getaddress()
+                                
+                                 document.getElementById('modelmessage').innerHTML=res.message
+                                if(res.success){
+                                    document.getElementById('trueimage').style.display='block'
+                                    document.getElementById('falseimage').style.display='none'
+                                }else{
+                                    document.getElementById('trueimage').style.display='none'
+                                    document.getElementById('falseimage').style.display='block'
+                                }
+                                $("#exampleModalCenter").modal();
+                                save()
+                                console.log(res)
+                            }
+                        })
+                        //save()
+                   }
+               
+
+                    
+
+
+                    function editaddress(id){
+                        input_toggle()
+                        $.ajax({
+                            url:editaddress_url,
+                            type:'get',
+                            data:{'id':id},
+                            success:function(res){
+                                console.log(res)
+                                document.getElementById('fullname').value=res.fullname
+                                document.getElementById('mobile_no').value=res.mobile_no
+                                document.getElementById('pin_code').value=res.pin_code
+                                document.getElementById('building_details').value=res.building_details
+                                document.getElementById('locality_details').value=res.locality_details
+                                document.getElementById('state').value=res.state
+                                var fun_name="saveeditedaddress("+id+")"
+                                document.getElementById('savebutton').setAttribute('onclick',fun_name)
+                            }
+                        })
+                        
+                        console.log(id)
+                    }
+
+
+                   function renderaddress(k,obj){
+                       address_ul=document.getElementById('addresses')
+                       address_li=document.createElement('li')
+                       address_li.setAttribute('class','generated')
+                       address_li.innerHTML="<div class='address1'><span class='address-1'>Address-"+k+"</span><div class='division'></div><span class='address-name'>"+obj.fullname+"</span><span class='address-flat'>"+obj.building_details+"</span><span class='address-locality'>"+obj.locality_details+"</span><span class=address-locality>"+obj.state+"</span><span class='address-pin'>"+obj.pin_code+"</span><span class='address-phone'>"+obj.mobile_no+"</span><div class='address-buttons'><button onclick='editaddress("+obj.id+")'>edit</button><button onclick='deleteaddress("+obj.id+")'>Remove</button></div></div>"
+                        address_ul.appendChild(address_li)
+                    }
+                   function getaddress(){
+                       $.ajax({
+                           url:address_url,
+                            type:'GET',
+                            success:function(res){
+                                console.log(res)
+                                for(var k in res){
+                                    renderaddress(k,res[k])
+                                }
+                            }
+                       })
+                   }
+                   getaddress()
+                   function addaddress(){
+                       $('.generated').remove();
+                        $.ajax({
+                            url:address_url,
+                            type:'POST',
+                            data:{
+                                'fullname':document.getElementById('fullname').value,
+                                'mobile_no':document.getElementById('mobile_no').value,
+                                'pin_code':document.getElementById('pin_code').value,
+                                'building_details':document.getElementById('building_details').value,
+                                'locality_details':document.getElementById('locality_details').value,
+                                'state':document.getElementById('state').value,
+                            },
+                            success:function(res){
+                                getaddress()
+                                 document.getElementById('modelmessage').innerHTML=res.message
+                                if(res.success){
+                                    document.getElementById('trueimage').style.display='block'
+                                    document.getElementById('falseimage').style.display='none'
+                                }else{
+                                    document.getElementById('trueimage').style.display='none'
+                                    document.getElementById('falseimage').style.display='block'
+                                }
+                                $("#exampleModalCenter").modal();
+                                save()
+                                console.log(res)
+                            }
+                        })
+                        //save()
+                   }
+               </script>
+            <!--<button onclick="save()">save</button>-->
             </div>
             
             </div>

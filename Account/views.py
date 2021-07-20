@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.password_validation import validate_password
 from django.core.validators import validate_email
-from Account.models import CustomUser
+from Account.models import Address, CustomUser
 from django.http.response import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
@@ -122,3 +122,68 @@ def account(request):
         else:
             return JsonResponse({'message': 'Enter all details', 'success': False})
     return render(request, 'Account/myaccount.html', {'title': request.user.name})
+
+
+@csrf_exempt
+def address(request):
+    if(request.method == 'POST'):
+        # add new address of current user
+        print(request.POST)
+        if(request.POST.get('fullname') and request.POST.get('mobile_no') and request.POST.get('state') and request.POST.get('locality_details') and request.POST.get('pin_code') and request.POST.get('building_details')):
+            new_address = Address(
+                user=request.user,
+                fullname=request.POST.get('fullname'),
+                mobile_no=request.POST.get('mobile_no'),
+                pin_code=request.POST.get('pin_code'),
+                building_details=request.POST.get('building_details'),
+                locality_details=request.POST.get('locality_details'),
+                state=request.POST.get('state')
+            )
+            new_address.save()
+            return JsonResponse({'message': "Address Added", 'success': True})
+    addresses = Address.objects.filter(user=request.user)
+    print(addresses)
+    address_dict = {}
+    address_counter = 0
+    for single_address in addresses:
+        single_address_dict = {}
+        address_counter = address_counter+1
+        single_address_dict['id'] = single_address.id
+        single_address_dict['fullname'] = single_address.fullname
+        single_address_dict['mobile_no'] = single_address.mobile_no
+        single_address_dict['pin_code'] = single_address.pin_code
+        single_address_dict['building_details'] = single_address.building_details
+        single_address_dict['locality_details'] = single_address.locality_details
+        single_address_dict['state'] = single_address.state
+        address_dict[address_counter] = single_address_dict
+    return JsonResponse(address_dict)
+
+
+@csrf_exempt
+def edit_or_delete_address(request):
+    if(request.POST.get('delete_id')):
+        delete_address = Address.objects.get(pk=request.POST.get('delete_id'))
+        delete_address.delete()
+        return JsonResponse({'message': "Address Deleted", 'success': True})
+
+    if(request.POST.get('edit_id')):
+        edit_address = Address.objects.get(pk=request.POST.get('edit_id'))
+        edit_address.fullname = request.POST.get('fullname')
+        edit_address.mobile_no = request.POST.get('mobile_no')
+        edit_address.pin_code = request.POST.get('pin_code')
+        edit_address.building_details = request.POST.get('building_details')
+        edit_address.locality_details = request.POST.get('locality_details')
+        edit_address.state = request.POST.get('state')
+        edit_address.save()
+        return JsonResponse({'message': "Address Edited", 'success': True})
+    id = request.GET.get('id')
+    address = Address.objects.get(pk=id)
+    data = {
+        'fullname': address.fullname,
+        'mobile_no': address.mobile_no,
+        'pin_code': address.pin_code,
+        'building_details': address.building_details,
+        'locality_details': address.locality_details,
+        'state': address.state,
+    }
+    return JsonResponse(data)
