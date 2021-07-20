@@ -10,6 +10,10 @@ from django.core.exceptions import ValidationError
 import re
 from django.contrib.auth import authenticate, login as user_login, logout as user_logout
 # Create your views here.
+'''pastecode here'''
+
+
+''''''
 
 
 def validate_phone(s):
