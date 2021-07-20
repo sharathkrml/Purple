@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width-device-width, initial-scale=1.0">
+        {% if title %}
+        <title>{{title}}</title>
+    	{% else %}
+        <title>HOME</title>
+    	{% endif %}
+        <link rel="stylesheet" href="{% static 'Account/style.css' %}">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <!--added a cdn link by searching font awesome4 cdn and getting this link from https://www.bootstrapcdn.com/fontawesome/ this url*/-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    </head>
+    <body>
+        <!--<div class ="header">-->
+        <div class="container">
+            <div class="navbar">
+                <div class="logo">
+                    <a href="index.html"><img src="{% static 'Account/images/logo.png'%}" width="125px"></a>
+                </div>
+                 <nav class="category">
+                    <ul id="MenuItems">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">Categories</a>
+                            <div class="megamenu">
+                                <span>
+                                    <a href="#" class="megatitle">Gifts</a>
+                                    <a href="products.html">for Men</a>
+                                    <a href="products.html">For Women</a>
+                                    <a href="anniversary.html">anniversary special</a>
+                                    <a href="birthday.html">Birthday special</a>
+                                    <a href="personalised.html">Personalised Gifts</a>
+                                </span>
+                            </div>
+                        </li>
+                         <li><a href="products.html">Shop</a></li>
+                         <li><a href="ContactUs.html">Contact</a></li>
+                         {% if user.is_authenticated %}
+							    <li><a href="account.html">{{user.name}}</a></li>
+							    <li><a href="{% url 'logout' %}">Logout</a></li>
+                			{% else %}
+								<li><a href="{$ url 'login' $}">Account</a></li>
+                        {% endif %}
+
+                    </ul>
+                </nav>
+                <a href="cart.html"><img src="{% static 'Account/images/cart.png'%}" width="30px" height="30px"></a>
+                <img src="{% static 'Account/images/menu.png'%}" class="menu-icon" onClick="menutoggle()" >
+            </div>
+           
+        </div>
+    <!--</div>-->
+    
+            {% if messages %}
+              {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+              {% endfor %}
+            {% endif %}
+         
+    {% block content %}{% endblock %}
+       
+        <!----------------------------------footer------------------------------------->
+        <div class ="footer">
+        <div class="container">
+            
+            <div class="row">
+                
+                <div class="footer-col-2">
+                    <img src="{% static 'Account/images/logo.png' %}">
+                    <p>The true value of a gift is the sentiment begind the gifting.</p>
+                </div>
+                
+                
+                
+            </div>
+            
+            <hr><!--horizontal line-->
+            <p class="copyright">Copyright 2021 </p>
+            
+        </div>
+    </div>
+        
+
+        
+        <!-----------------------------------js for toggle menu-------------------------------------->
+        <script>
+            var menuItems=document.getElementById("MenuItems");
+            
+            MenuItems.style.maxHeight="0px";
+            function menutoggle(){
+                if(MenuItems.style.maxHeight == "0px"){
+                    MenuItems.style.maxHeight="200px";
+                }
+                else{
+                    MenuItems.style.maxHeight="0px";
+                }
+            }
+        </script>
+        
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </body>
+</html>
