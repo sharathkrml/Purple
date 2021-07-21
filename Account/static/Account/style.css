@@ -393,6 +393,10 @@ select:focus {
   background: #601e9e;
   color: #fff;
 }
+.page-btn span:active {
+  background: #601e9e;
+  color: #fff;
+}
 
 /*-----------------------single product details -----------------------*/
 
@@ -931,13 +935,12 @@ p.checkout-coupon input[type="submit"] {
   background-color: #e5e5e5;
   margin: 2% 5%;
   align-items: center;
-  width: 80%;
+  height: 30vh;
+  width: 30vw;
   max-height: 200px;
   max-width: 200px;
-  height: 50%;
   border-radius: 8px;
   border: 1px solid rgb(83, 83, 83);
-  border-bottom-width: 5px;
 }
 .address-1 {
   font-size: 70%;
@@ -991,7 +994,7 @@ p.checkout-coupon input[type="submit"] {
 }
 .address-list {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   align-items: center;
 }
 .address-list > li {
@@ -1002,7 +1005,9 @@ p.checkout-coupon input[type="submit"] {
   display: flex;
   flex-direction: column;
   background-color: #e5e5e5;
-  height: 200px;
+  height: 30vh;
+  width: 30vw;
+  max-height: 200px;
   max-width: 200px;
   border-radius: 8px;
   align-items: center;
@@ -1010,7 +1015,6 @@ p.checkout-coupon input[type="submit"] {
   padding: 0 10px;
   margin: 2% 5%;
   border: 1px solid rgb(83, 83, 83);
-  border-bottom-width: 5px;
   margin-top: 5%;
 }
 .address-input {
@@ -1170,4 +1174,74 @@ p.checkout-coupon input[type="submit"] {
   margin: 0 10%;
   margin-top: 5%;
   margin-bottom: 5%;
+}
+
+/* reset pass filds */
+
+.reset-input{
+  height: 60vh;
+  width: 50vw;
+  background-color: rgb(219, 217, 217);
+  padding: 2%;
+}
+
+.mob-input{
+  display: flex;
+  flex-direction: column;
+}
+
+.input{
+  width: 50%;
+  max-width: 300px;
+  height: 30px;
+  background-color: rgb(199, 199, 199);
+  border-radius: 5px;
+  border: 1px solid grey;
+  margin-bottom: 20px;
+}
+
+.reset{
+  visibility: visible;
+}
+
+.otp{
+  visibility: hidden;
+}
+
+.reset > button{
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid white;
+  background-color: #601e9e;
+  color: white;
+  margin-left: 10px;
+}
+
+.Otp-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.Otp-text{
+  margin-left: 10px;
+  margin-top: 20px;
+}
+
+.Otpinput{
+  width: 20%;
+  max-width: 300px;
+  height: 30px;
+  background-color: rgb(199, 199, 199);
+  border-radius: 5px;
+  border: 1px solid grey;
+  margin-bottom: 20px;
+}
+
+.otp > a > button {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid white;
+  background-color: #601e9e;
+  color: white;
+  margin-left: 10px;
 }

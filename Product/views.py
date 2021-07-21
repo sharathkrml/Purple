@@ -25,8 +25,6 @@ def category(request, slug):
     category = Category.objects.get(slug=slug)
     products = Product.objects.filter(category=category)
     p = Paginator(products, 12)
-    print(p.num_pages)
-    print(p.page(1).object_list)
     if(request.method == 'POST'):
         page_no = request.POST.get('page_no')
         products_of_that_page = p.page(page_no).object_list
@@ -42,3 +40,11 @@ def category(request, slug):
             products_dict[key] = single_product_dict
         return JsonResponse(products_dict)
     return render(request, 'Product/category.html', {'slug': slug, 'title': category.name, 'total_page_no': p.num_pages})
+
+
+def home(request):
+    return render(request, 'Product/index.html')
+
+
+def contactus(request):
+    return render(request, 'Product/contactus.html')

@@ -1,0 +1,324 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width-device-width, initial-scale=1.0">
+        <title>Purple</title>
+        <link rel="stylesheet" href="{% static 'Account/style.css' %}">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+        <!--added a cdn link by searching font awesome4 cdn and getting this link from https://www.bootstrapcdn.com/fontawesome/ this url*/-->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    </head>
+    <body>
+        <div class ="header">
+        <div class="container">
+            <div class="navbar">
+                <div class="logo">
+                    <a href="index.html"><img src="{% static 'Account/images/logo.png' %}" width="125px"></a>
+                </div>
+                <nav class="category" >
+                    <ul id="MenuItems">
+                        <li><a href="index.html">Home</a></li>
+                         <li><a href="#">Categories</a>
+                            <div class="megamenu">
+                                <span>
+                                    <a href="#" class="megatitle">Gifts</a>
+                                    <a href="products.html">for Men</a>
+                                    <a href="products.html">For Women</a>
+                                    <a href="anniversary.html">anniversary special</a>
+                                    <a href="birthday.html">Birthday special</a>
+                                    <a href="personalised.html">Personalised Gifts</a>
+                                </span>
+                            </div>
+                        </li>
+                        <li><a href="#">Occasions</a>
+                            <div class="megamenu">
+                                <span>
+                                    <a href="#" class="megatitle">Gifts</a>
+                                    <a href="products.html">for Men</a>
+                                    <a href="products.html">For Women</a>
+                                    <a href="anniversary.html">anniversary special</a>
+                                    <a href="birthday.html">Birthday special</a>
+                                    <a href="personalised.html">Personalised Gifts</a>
+                                </span>
+                            </div>
+                        </li>
+                         <li><a href="ContactUs.html">Contact</a></li>
+                         <li><a href="#">My Account</a>
+                            <div class="megamenu" style="width: 200px;">
+                                <span>
+                                    <a href="account.html">SignIn</a>
+                                    <a href="account.html">SignUp</a>
+                                   
+                                </span>
+                            </div>
+                        </li>
+                         
+
+                    </ul>
+                </nav>
+                <a href="cart.html"><img src="{% static 'Account/images/cart.png' %}" width="30px" height="30px"></a>
+                <img src="images/menu.png" class="menu-icon" onClick="menutoggle()" >
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <h1>Love the giver<br>more than a Gift </h1>
+                    <p>Giving to others will not take away from what you have but will in fact add to your life.</p>
+                    <a href="products.html" class="btn">Explore Now &#8594;</a>
+                </div>
+                <div class="col-2">
+                    <img class="header_img" src="{% static 'Account/images/newheader.jpg' %}">
+                </div>
+            </div>
+        </div>
+    </div>
+        
+        <!------------------------------ featured categories------------------------------>
+        <div class="categories">
+            <div class="small-container">
+                <div class="row">
+                    <a href="birthday.html"><div class="col-3">
+                        <span class="categorylistone">Birthday</span>
+                        <img src="{% static 'Account/images/cake2.png' %}">
+                </div>
+            </a>
+                <div class="col-3">
+                    <span class="categorylist">Personalised </span>
+                    <a href="personalised.html"><img src="{% static 'Account/images/gift1.png' %}"></a>
+                </div>
+                <div class="col-3">
+                    <span class="categorylist">Anniversary
+                    <a href="anniversary.html"><img src="{% static 'Account/images/anni2.png' %}"></a>
+
+                    </span>
+                </div>
+            </div>
+            </div>
+        </div>
+        
+        <!------------------------------ featured Products------------------------------>
+        <div class="small-container">
+            <h2 class="title" >Featured Products</h2>
+                <div class="row">
+                    <div class="col-4">
+                        <a href="products-details.html"><img src="https://stylesatlife.com/wp-content/uploads/2018/05/Bunch-of-Gourmets-Birthday-Gifts.jpeg"></a>
+                        <a href="products-details.html"><h4>anniversary gift</h4></a>
+                        <div class="rating">
+                            <!--(before this added awesome4 cdn font link to the head)added a cdn link by searching font awesome4 icon and from the site  search the star entering the first option and getting a link of this fa-star*-->
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star-half-o" ></i>
+                            <i class="fa fa-star-o" ></i>
+                        </div>
+                        <p>$50.00</p>
+                    </div>
+                    <div class="col-4">
+                        <a href="products-details.html"><img src="https://cdn.igp.com/f_auto,q_auto,t_prodm/products/p-personalized-love-you-box-for-anniversary-133462-m.jpg"></a>
+                        <h4>anniversary gift</h4>
+                        <div class="rating">
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star-half-o" ></i>
+                        </div>
+                        <p>$35.00</p>
+                    </div>
+                    <div class="col-4">
+                        <a href="products-details.html"><img src="https://cdn.igp.com/f_auto,q_auto,t_prodm/products/p-engraved-personalized-wooden-photo-frame-for-anniversary-111784-m.jpg"></a>
+                        <h4>anniversary gift</h4>
+                        <div class="rating">
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star-o" ></i>
+                        </div>
+                        <p>$15.00</p>
+                    </div>
+                    <div class="col-4">
+                        <a href="products-details.html"><img src="https://5.imimg.com/data5/TV/LU/KF/SELLER-11481305/wedding-anniversary-engraved-crystal-photo-frame-500x500.JPG"></a>
+                        <h4>anniversary gift</h4>
+                        <div class="rating">
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star-o" ></i>
+                            <i class="fa fa-star-o" ></i>
+                        </div>
+                        <p>$48.00</p>
+                    </div>  
+                </div>
+            
+            
+             <h2 class="title" >Latest Products</h2>
+                <div class="row">
+                    <div class="col-4">
+                        <a href="products-details.html"><img src="https://d3edcl142d7grd.cloudfront.net/flowers-n-gifts/vendordata/resized/yuvan-4251.jpg"></a>
+                        <h4>anniversary gift</h4>
+                        <div class="rating">
+                            <!--(before this added awesome4 cdn font link to the head)added a cdn link by searching font awesome4 icon and from the site  search the star entering the first option and getting a link of this fa-star*-->
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star-half-o" ></i>
+                            <i class="fa fa-star-o" ></i>
+                        </div>
+                        <p>$50.00</p>
+                    </div>
+                    <div class="col-4">
+                        <a href="products-details.html"><img src="https://www.cadburygifting.in/media/magefan_blog/Valentines_12.jpg"></a>
+                        <h4>anniversary gift</h4>
+                        <div class="rating">
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star-half-o" ></i>
+                        </div>
+                        <p>$21.00</p>
+                    </div>
+                    <div class="col-4">
+                        <a href="products-details.html"><img src="https://nypost.com/wp-content/uploads/sites/2/2020/02/valentines2.jpg?quality=80&strip=all&w=618&h=410&crop=1"></a>
+                        <h4>anniversary gift</h4>
+                        <div class="rating">
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star-o" ></i>
+                        </div>
+                        <p>$09.00</p>
+                    </div>
+                    <div class="col-4">
+                        <a href="products-details.html"><img src="https://rukminim1.flixcart.com/image/416/416/k9k8wi80/festive-gift-box/v/j/z/valentines-day-gift-for-girlfriend-boyfriend-husband-wife-fiance-original-imafrbd8b5qhpsea.jpeg?q=70"></a>
+                        <h4>anniversary gift</h4>
+                        <div class="rating">
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star-o" ></i>
+                            <i class="fa fa-star-o" ></i>
+                        </div>
+                        <p>$35.00</p>
+                    </div>  
+                </div>
+            <!--new row for the latest product-->
+                <div class="row">
+                    <div class="col-4">
+                        <a href="products-details.html"><img src="https://m.media-amazon.com/images/S/assets.wholefoodsmarket.com//content/8a/83/44dea2c55f5f8693ce5f1e520757/winter17-roseschocolates-horiz-1.jpg"></a>
+                        <h4>anniversary gift</h4>
+                        <div class="rating">
+                            <!--(before this added awesome4 cdn font link to the head)added a cdn link by searching font awesome4 icon and from the site  search the star entering the first option and getting a link of this fa-star*-->
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star-half-o" ></i>
+                            <i class="fa fa-star-o" ></i>
+                        </div>
+                        <p>$10.00</p>
+                    </div>
+                    <div class="col-4">
+                        <a href="products-details.html"><img src="https://giftlab.co/wp-content/uploads/2019/02/71UYQw3FOsL._SL1472_.jpg"></a>
+                        <h4>anniversary gift</h4>
+                        <div class="rating">
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star-half-o" ></i>
+                        </div>
+                        <p>$48.00</p>
+                    </div>
+                    <div class="col-4">
+                        <a href="products-details.html"><img src="https://www.sendgift2india.com/image/data/fnp/special-surprise-arrangement_1.jpg"></a>
+                        <h4>anniversary gift</h4>
+                        <div class="rating">
+                            <i class="fa fa-star-o" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star-o" ></i>
+                        </div>
+                        <p>$15.00</p>
+                    </div>
+                    <div class="col-4">
+                        <a href="products-details.html"><img src="https://i.pinimg.com/originals/a8/ce/a0/a8cea0f116d3a685548e41305cfb47cf.jpg"></a>
+                        <h4>anniversary gift</h4>
+                        <div class="rating">
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star" ></i>
+                            <i class="fa fa-star-o" ></i>
+                            <i class="fa fa-star-o" ></i>
+                        </div>
+                        <p>$21.00</p>
+                    </div>  
+                </div>
+            </div>
+        
+        <!--------------------------`   offer   --------------------------------->
+        <div class="offer">
+            <div class="small-container">
+                <div class="row">
+                    <div class="col-2">
+                        <img src="{% static 'Account/images/newheader.jpg' %}" class="offer-img">
+                    </div>
+                    <div class="col-2">
+                        <p>Exclusively Available on Purple</p>
+                        <h1>Special Gifts Collection</h1>
+                        <small> Buy latest collections of Gifts online on Purple-Gift-store at best prices from top brands at best prices. </small><br>
+                        <a href="products.html" class="btn">Buy Now &#8594;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <!------------------------------Testimonial---------------------------------->
+       
+       
+        
+        <!----------------------------------footer------------------------------------->
+        <div class ="footer">
+        <div class="container">
+            
+            <div class="row">
+                
+                <div class="footer-col-2">
+                    <img src="{% static 'Account/images/logo.png' %}">
+                    <p>The true value of a gift is the sentiment begind the gifting.</p>
+                </div>
+                
+               
+                
+            </div>
+            
+            <hr><!--horizontal line-->
+            
+        </div>
+    </div>
+        
+        
+        <!-----------------------------------js for toggle menu----------------------------------------------->
+        <script>
+            var menuItems=document.getElementById("MenuItems");
+            
+            MenuItems.style.maxHeight="0px";
+            function menutoggle(){
+                if(MenuItems.style.maxHeight == "0px"){
+                    MenuItems.style.maxHeight="200px";
+                }
+                else{
+                    MenuItems.style.maxHeight="0px";
+                }
+            }
+        </script>
+    </body>
+</html>

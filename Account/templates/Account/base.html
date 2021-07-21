@@ -29,9 +29,9 @@
                     <a href="index.html"><img src="{% static 'Account/images/logo.png'%}" width="125px"></a>
                 </div>
                  <nav class="category">
-                    <ul id="MenuItems">
+                     <ul id="MenuItems">
                         <li><a href="index.html">Home</a></li>
-                        <li><a href="#">Categories</a>
+                         <li><a href="#">Categories</a>
                             <div class="megamenu">
                                 <span>
                                     <a href="#" class="megatitle">Gifts</a>
@@ -43,16 +43,38 @@
                                 </span>
                             </div>
                         </li>
-                         <li><a href="products.html">Shop</a></li>
+                        <li><a href="#">Occasions</a>
+                            <div class="megamenu">
+                                <span>
+                                    <a href="#" class="megatitle">Gifts</a>
+                                    <a href="products.html">for Men</a>
+                                    <a href="products.html">For Women</a>
+                                    <a href="anniversary.html">anniversary special</a>
+                                    <a href="birthday.html">Birthday special</a>
+                                    <a href="personalised.html">Personalised Gifts</a>
+                                </span>
+                            </div>
+                        </li>
                          <li><a href="ContactUs.html">Contact</a></li>
                          {% if user.is_authenticated %}
-							    <li><a href="account.html">{{user.name}}</a></li>
-							    <li><a href="{% url 'logout' %}">Logout</a></li>
+
+                                <li><a href="#">My Account</a>
+                            <div class="megamenu" style="width: 200px;">
+                                <span>
+                                    <a class="megatitle" href="account.html">{{user.name}}</a>
+                                    <a href="{% url 'logout' %}">Logout</a>
+                                   
+                                </span>
+                            </div>
+                        </li>
                 			{% else %}
-								<li><a href="{$ url 'login' $}">Account</a></li>
+								<li><a href="{% url 'login' %}">Account</a></li>
                         {% endif %}
+                         
+                         
 
                     </ul>
+                    
                 </nav>
                 <a href="cart.html"><img src="{% static 'Account/images/cart.png'%}" width="30px" height="30px"></a>
                 <img src="{% static 'Account/images/menu.png'%}" class="menu-icon" onClick="menutoggle()" >
