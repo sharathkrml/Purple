@@ -54,7 +54,7 @@ def product(request, slug):
                         'category': product.category, 'imageurl': product.imageurl,
                         'price': product.price, 'price_new': product.price_new}
     else:
-        product_dict = {'name': product.name, 'description': product.description,
+        product_dict = {'id': product.id, 'name': product.name, 'description': product.description,
                         'category': product.category, 'imageurl': product.imageurl,
                         'price': product.price}
     Related_Products_dict = productListtodict(getRandomProduct(4))

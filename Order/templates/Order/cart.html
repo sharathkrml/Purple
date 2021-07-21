@@ -1,0 +1,80 @@
+{% extends 'Account/base.html' %}
+{% block content %}
+        <!------------------------------ cart items details------------------------------>
+
+        <div class="small-container cart-page">
+        <table id='cart-items-table'>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+            </tr>
+            
+            
+            
+            </table>
+            
+            <div class="total-price">
+                <table>
+                    <tr>
+                        <td>Subtotal</td>
+                        <td>$200.00</td>
+                    </tr>
+                    <tr>
+                        <td>Tax</td>
+                        <td>$35.00</td>
+                    </tr>
+                    <tr>
+                        <td>Total</td>
+                        <td>$230.00</td>
+                    </tr>
+                </table>
+                
+            </div>
+            <div class="checkout">
+                <a href="checkout.html">Proceed to CheckOut &#8594;</a>
+            </div>
+        </div>
+        <script>
+            function rendercart(k,obj){
+                        cart_items = document.getElementById('cart-items-table')
+                        
+                       cart_tr=document.createElement('tr')
+                       cart_tr.setAttribute('class','generated')
+                       cart_tr.innerHTML="<td><div class='cart-info'><img src="+obj.imageurl+"><div><p>"+obj.name+"</p><small>Price: $"+obj.price+"</small><br><a href=''>Remove</a></div></div></td><td><input id='cart_item_quantity' onchange=updatecart("+obj.id+") type='number' value="+obj.quantity+"></td><td>$"+obj.total+"</td>"
+                        cart_items.appendChild(cart_tr)
+
+            }
+            getcart_url="{% url 'getcart' %}"
+            function getcart(){
+                    $('.generated').remove();
+                    $.ajax({
+                        url:getcart_url,
+                        type:'get',
+                        success:function(res){
+                            console.log(res)
+                                for(var k in res){
+                                    rendercart(k,res[k])
+                                }
+                    }
+            })
+            }
+            getcart()
+            cart_url="{% url 'cart' %}"
+            function updatecart(cart_id){
+                    $.ajax({
+                        url:cart_url,
+                        type:'post',
+                        data:{
+                            'update_id':cart_id,
+                            'quantity':document.getElementById('cart_item_quantity').value
+                        },
+                        success:function(res){
+                            getcart()
+                    }
+            })
+        }
+        </script>
+        
+        
+{% endblock %}

@@ -18,11 +18,11 @@
         <div class="container">
             <div class="navbar">
                 <div class="logo">
-                    <a href="index.html"><img src="{% static 'Account/images/logo.png' %}" width="125px"></a>
+                    <a href="{% url 'home' %}"><img src="{% static 'Account/images/logo.png' %}" width="125px"></a>
                 </div>
                 <nav class="category" >
                     <ul id="MenuItems">
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="{% url 'home' %}">Home</a></li>
                          <li><a href="#">Categories</a>
                             <div class="megamenu">
                                 <span>
@@ -41,7 +41,7 @@
                                 </span>
                             </div>
                         </li>
-                         <li><a href="ContactUs.html">Contact</a></li>
+                         <li><a href="{% url 'contactus' %}">Contact</a></li>
                          {% if user.is_authenticated %}
 
                                 <li><a href="#">My Account</a>
@@ -61,14 +61,14 @@
 
                     </ul>
                 </nav>
-                <a href="cart.html"><img src="{% static 'Account/images/cart.png' %}" width="30px" height="30px"></a>
+                <a href="{% url 'cart' %}"><img src="{% static 'Account/images/cart.png' %}" width="30px" height="30px"></a>
                 <img src="images/menu.png" class="menu-icon" onClick="menutoggle()" >
             </div>
             <div class="row">
                 <div class="col-2">
                     <h1>Love the giver<br>more than a Gift </h1>
                     <p>Giving to others will not take away from what you have but will in fact add to your life.</p>
-                    <a href="products.html" class="btn">Explore Now &#8594;</a>
+                    <a href="{% url 'category_url' %}valentines" class="btn">Explore Now &#8594;</a>
                 </div>
                 <div class="col-2">
                     <img class="header_img" src="{% static 'Account/images/newheader.jpg' %}">
@@ -150,7 +150,7 @@
                         <p>Exclusively Available on Purple</p>
                         <h1>Special Gifts Collection</h1>
                         <small> Buy latest collections of Gifts online on Purple-Gift-store at best prices from top brands at best prices. </small><br>
-                        <a href="products.html" class="btn">Buy Now &#8594;</a>
+                        <a href="{% url 'category_url' %}valentines" class="btn">Buy Now &#8594;</a>
                     </div>
                 </div>
             </div>

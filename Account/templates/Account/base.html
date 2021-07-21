@@ -26,7 +26,7 @@
         <div class="container">
             <div class="navbar">
                 <div class="logo">
-                    <a href="index.html"><img src="{% static 'Account/images/logo.png'%}" width="125px"></a>
+                    <a href="{% url 'home' %}"><img src="{% static 'Account/images/logo.png'%}" width="125px"></a>
                 </div>
                  <nav class="category">
                      <ul id="MenuItems">
@@ -70,7 +70,7 @@
                     </ul>
                     
                 </nav>
-                <a href="cart.html"><img src="{% static 'Account/images/cart.png'%}" width="30px" height="30px"></a>
+                <a href="{% url 'cart' %}"><img src="{% static 'Account/images/cart.png'%}" width="30px" height="30px"></a>
                 <img src="{% static 'Account/images/menu.png'%}" class="menu-icon" onClick="menutoggle()" >
             </div>
            

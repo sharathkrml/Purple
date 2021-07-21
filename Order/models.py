@@ -13,5 +13,5 @@ class Cart(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.cart_total_price:
-            self.cart_total_price = self.quantity * self.product_id.selling_price
+            self.cart_total_price = self.quantity * int(self.product.price_new)
         super(Cart, self).save(*args, **kwargs)
