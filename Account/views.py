@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.core.exceptions import ValidationError
 import re
 from django.contrib.auth import authenticate, login as user_login, logout as user_logout
+from Product.views import Navbar
 # Create your views here.
 '''pastecode here'''
 
@@ -37,7 +38,7 @@ def login(request):
                         return redirect('account')
                 else:
                     messages.warning(request, f'Invalid Credentials')
-                    return render(request, 'Account/login_or_signup.html', {'title': 'Login', 'login_data': login_data})
+                    return render(request, 'Account/login_or_signup.html', {'title': 'Login', 'login_data': login_data, 'Navbar': Navbar})
 
             else:
                 user = authenticate(
@@ -48,7 +49,7 @@ def login(request):
 
                 else:
                     messages.warning(request, f'Invalid Credentials')
-                    return render(request, 'Account/login_or_signup.html', {'title': 'Login', 'login_data': login_data})
+                    return render(request, 'Account/login_or_signup.html', {'title': 'Login', 'login_data': login_data, 'Navbar': Navbar})
 
         # register
         register_username = request.POST.get('register_username')
@@ -64,21 +65,21 @@ def login(request):
                 except ValidationError as e:
                     message = list(e)
                     messages.warning(request, message[0])
-                    return render(request, 'Account/login_or_signup.html', {'title': 'Login', 'register_data': register_data})
+                    return render(request, 'Account/login_or_signup.html', {'title': 'Login', 'register_data': register_data, 'Navbar': Navbar})
                 else:
                     if(CustomUser.objects.filter(email=register_email)):
                         messages.warning(request, f'Email already Exist')
-                        return render(request, 'Account/login_or_signup.html', {'title': 'Login', 'register_data': register_data})
+                        return render(request, 'Account/login_or_signup.html', {'title': 'Login', 'register_data': register_data, 'Navbar': Navbar})
                     elif(CustomUser.objects.filter(phone=register_phoneno)):
                         messages.warning(request, f'Phone already Exist')
-                        return render(request, 'Account/login_or_signup.html', {'title': 'Login', 'register_data': register_data})
+                        return render(request, 'Account/login_or_signup.html', {'title': 'Login', 'register_data': register_data, 'Navbar': Navbar})
                     else:
                         try:
                             validate_password(register_password)
                         except ValidationError as e:
                             message = list(e)
                             messages.warning(request, message[0])
-                            return render(request, 'Account/login_or_signup.html', {'title': 'Login', 'register_data': register_data})
+                            return render(request, 'Account/login_or_signup.html', {'title': 'Login', 'register_data': register_data, 'Navbar': Navbar})
                         else:
                             user = CustomUser(
                                 email=register_email, name=register_username, phone=register_phoneno)
@@ -89,8 +90,8 @@ def login(request):
 
             else:
                 messages.warning(request, f'Enter a valid phone number')
-                return render(request, 'Account/login_or_signup.html', {'title': 'Login', 'register_data': register_data})
-    return render(request, 'Account/login_or_signup.html', {'title': 'Login'})
+                return render(request, 'Account/login_or_signup.html', {'title': 'Login', 'register_data': register_data, 'Navbar': Navbar})
+    return render(request, 'Account/login_or_signup.html', {'title': 'Login', 'Navbar': Navbar})
 
 
 def logout(request):
@@ -125,7 +126,7 @@ def account(request):
                 return JsonResponse({'message': 'Invalid Phone', 'success': False})
         else:
             return JsonResponse({'message': 'Enter all details', 'success': False})
-    return render(request, 'Account/myaccount.html', {'title': request.user.name})
+    return render(request, 'Account/myaccount.html', {'title': request.user.name, 'Navbar': Navbar})
 
 
 @csrf_exempt
