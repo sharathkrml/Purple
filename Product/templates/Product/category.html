@@ -1,0 +1,57 @@
+ {% extends 'Account/base.html' %}
+  {% block content %}
+        <!------------------------------ Products------------------------------>
+        <div class="small-container">
+            
+            <h2 class="title" >{{title}}</h2>
+            <ul id="product-list" class="product-list">
+                    
+                </ul>
+            
+            <div id='pagination' class="page-btn">
+            </div>
+            
+        </div> 
+        <!-- Javascript portion -->
+        <script> 
+            product_url = "{% url 'product_url' %}"
+            category_url = "{% url 'category_url' %}{{slug}}"
+            pagination_id=document.getElementById('pagination')
+            function renderProducts(obj){
+                 products_body=document.getElementById('product-list')
+                product_li = document.createElement('li')
+                product_li.innerHTML="<div class='col-4'><a href="+product_url+obj.image_slug+"><img src="+obj.imageurl+"></a><a href="+product_url+obj.image_slug+"><h4>"+obj.name+"</h4></a><p>₹ "+obj.price_new+"</p></div>"
+                products_body.appendChild(product_li)
+                
+            }
+
+            function getdetailsbypage(page_no){
+               $.ajax({
+                   url:category_url,
+                   type:'post',
+                   data:{'page_no':page_no},
+                   success:function(res){
+                        console.log(product_url)
+                        console.log(res)
+                        products_body=document.getElementById('product-list')
+                        var child = products_body.lastElementChild; 
+                        while (child) {
+                            products_body.removeChild(child);
+                            child = products_body.lastElementChild;
+                            }
+                        for (var obj in res){
+                            renderProducts(res[obj])
+						}
+                    }
+               })
+            }
+            getdetailsbypage(1)
+            for(let i = 1; i <= "{{total_page_no}}"; i++){
+                console.log(i)
+                span_element = document.createElement('span')
+                span_element.setAttribute('onclick','getdetailsbypage('+i+')')
+                span_element.innerHTML=i
+                pagination_id.appendChild(span_element)
+            }
+        </script>
+ {% endblock %}

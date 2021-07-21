@@ -1,5 +1,9 @@
+from django.core.paginator import Paginator
+from django.db.models.fields import CommaSeparatedIntegerField
+from django.http.response import JsonResponse
 from django.shortcuts import render
-from .models import Product
+from django.views.decorators.csrf import csrf_exempt
+from .models import Category, Product
 # Create your views here.
 
 
@@ -14,3 +18,27 @@ def product(request, slug):
                         'category': product.category, 'imageurl': product.imageurl,
                         'price': product.price}
     return render(request, 'Product/product.html', {'title': product.name, 'product_dict': product_dict})
+
+
+@csrf_exempt
+def category(request, slug):
+    category = Category.objects.get(slug=slug)
+    products = Product.objects.filter(category=category)
+    p = Paginator(products, 12)
+    print(p.num_pages)
+    print(p.page(1).object_list)
+    if(request.method == 'POST'):
+        page_no = request.POST.get('page_no')
+        products_of_that_page = p.page(page_no).object_list
+        products_dict = {}
+        key = 0
+        for single_product in products_of_that_page:
+            key = key+1
+            single_product_dict = {}
+            single_product_dict['name'] = single_product.name
+            single_product_dict['price_new'] = single_product.price_new
+            single_product_dict['imageurl'] = single_product.imageurl
+            single_product_dict['image_slug'] = single_product.slug
+            products_dict[key] = single_product_dict
+        return JsonResponse(products_dict)
+    return render(request, 'Product/category.html', {'slug': slug, 'title': category.name, 'total_page_no': p.num_pages})
