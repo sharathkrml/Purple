@@ -9,9 +9,3 @@ class Cart(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
     ordered = models.BooleanField(default=False)
-    cart_total_price = models.IntegerField()
-
-    def save(self, *args, **kwargs):
-        if not self.cart_total_price:
-            self.cart_total_price = self.quantity * int(self.product.price_new)
-        super(Cart, self).save(*args, **kwargs)

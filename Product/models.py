@@ -22,8 +22,8 @@ class Product(models.Model):
     description = models.TextField()
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
     imageurl = models.CharField(max_length=200)
-    price = models.CharField(max_length=10)
-    price_new = models.CharField(max_length=10)
+    price = models.IntegerField()
+    price_new = models.IntegerField()
     slug = models.SlugField(max_length=50, blank=True)
 
     def save(self, *args, **kwargs):

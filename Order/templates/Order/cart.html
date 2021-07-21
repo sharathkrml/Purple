@@ -18,15 +18,15 @@
                 <table>
                     <tr>
                         <td>Subtotal</td>
-                        <td>$200.00</td>
+                        <td id='Subtotal'></td>
                     </tr>
                     <tr>
                         <td>Tax</td>
-                        <td>$35.00</td>
+                        <td><strike>₹35.00</strike></td>
                     </tr>
                     <tr>
                         <td>Total</td>
-                        <td>$230.00</td>
+                        <td id='Total'></td>
                     </tr>
                 </table>
                 
@@ -36,12 +36,27 @@
             </div>
         </div>
         <script>
+            cart_url="{% url 'cart' %}"
+
+            function deletecart(delete_id){
+                $('.generated').remove();
+                $.ajax({
+                        url:cart_url,
+                        type:'post',
+                        data:{'delete_id':delete_id},
+                        success:function(res){
+                            console.log(res)
+                            getcart()
+                            
+                    }
+            })
+        }
             function rendercart(k,obj){
                         cart_items = document.getElementById('cart-items-table')
                         
                        cart_tr=document.createElement('tr')
                        cart_tr.setAttribute('class','generated')
-                       cart_tr.innerHTML="<td><div class='cart-info'><img src="+obj.imageurl+"><div><p>"+obj.name+"</p><small>Price: $"+obj.price+"</small><br><a href=''>Remove</a></div></div></td><td><input id='cart_item_quantity' onchange=updatecart("+obj.id+") type='number' value="+obj.quantity+"></td><td>$"+obj.total+"</td>"
+                       cart_tr.innerHTML="<td><div class='cart-info'><img src="+obj.imageurl+"><div><p>"+obj.name+"</p><small>Price: ₹"+obj.price+"</small><br><button class=removebutton onclick='deletecart("+obj.id+")'>Remove</button></div></div></td><td><input id='cart_item_quantity' onchange=updatecart("+obj.id+") type='number' value="+obj.quantity+"></td><td>₹"+obj.total+"</td>"
                         cart_items.appendChild(cart_tr)
 
             }
@@ -53,14 +68,18 @@
                         type:'get',
                         success:function(res){
                             console.log(res)
+                            var total=0
                                 for(var k in res){
+                                    total=total+res[k].total
                                     rendercart(k,res[k])
                                 }
+                                console.log(total)
+                            document.getElementById('Subtotal').innerHTML="₹"+total
+                            document.getElementById('Total').innerHTML="₹"+total
                     }
             })
             }
             getcart()
-            cart_url="{% url 'cart' %}"
             function updatecart(cart_id){
                     $.ajax({
                         url:cart_url,

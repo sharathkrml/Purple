@@ -473,7 +473,7 @@ td {
 }
 
 td input {
-  width: 40px;
+  width: 70px;
   height: 30px;
   padding: 5px;
 }
@@ -1244,4 +1244,16 @@ p.checkout-coupon input[type="submit"] {
   background-color: #601e9e;
   color: white;
   margin-left: 10px;
+}
+
+.removebutton {
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  /*optional*/
+  font-family: arial, sans-serif;
+  /*input has OS specific font-family*/
+  color: #069;
+  text-decoration: underline;
+  cursor: pointer;
 }

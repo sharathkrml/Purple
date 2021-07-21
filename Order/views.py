@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from .models import Cart, Product
 from django.views.decorators.csrf import csrf_exempt
-
+from Product.views import Navbar
 # Create your views here.
 
 
@@ -22,7 +22,7 @@ def getcart(request):
                 'price': cart_item.product.price_new,
                 'imageurl': cart_item.product.imageurl,
                 'quantity': cart_item.quantity,
-                'total': cart_item.cart_total_price
+                'total': cart_item.quantity*cart_item.product.price_new
             }
             cart_items_dict[k] = cart_item_dict
         return JsonResponse(cart_items_dict)
@@ -31,7 +31,6 @@ def getcart(request):
 @csrf_exempt
 @login_required
 def cart(request):
-
     if(request.user.is_authenticated):
         if(request.POST.get('product_id')):  # add to cart
             product_id = request.POST.get('product_id')
@@ -39,8 +38,9 @@ def cart(request):
             quantity = request.POST.get('quantity')
             if(len(Cart.objects.filter(product=product, user=request.user, ordered=False)) == 0):
                 # checks if there is an entry,if no
-                new = Cart(user=request.user, product=product,
-                           quantity=int(quantity), ordered=False)
+                new = Cart(user=request.user,
+                           product=product,
+                           quantity=quantity, ordered=False)
                 new.save()
             else:
                 old_object = Cart.objects.filter(
@@ -55,8 +55,8 @@ def cart(request):
         if(request.POST.get('update_id')):  # delete from cart
             quantity = request.POST.get('quantity')
             cart_object = Cart.objects.get(pk=request.POST['update_id'])
-            cart_object.quantity = cart_object.quantity + int(quantity)
+            cart_object.quantity = quantity
             cart_object.save()
             return JsonResponse({'success': True})
 
-    return render(request, 'Order/cart.html')
+    return render(request, 'Order/cart.html', {'Navbar': Navbar})

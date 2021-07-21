@@ -86,7 +86,3 @@ def home(request):
                                                   'Featured_Products_dict': Featured_Products_dict,
                                                   'Latest_Products_dict1': Latest_Products_dict1,
                                                   'Latest_Products_dict2': Latest_Products_dict2})
-
-
-def contactus(request):
-    return render(request, 'Product/contactus.html')
