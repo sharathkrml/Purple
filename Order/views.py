@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from .models import Cart, Product
 from django.views.decorators.csrf import csrf_exempt
-from Product.views import Navbar
+from Product.views import Navbar, product
 # Create your views here.
 
 
@@ -91,3 +91,31 @@ def checkout(request):
         return JsonResponse({'message': 'Checkout Successful', 'success': True})
 
     return render(request, 'Order/checkout.html', {'title': 'Checkout', 'Navbar': Navbar})
+
+
+@csrf_exempt
+def getorderdetails(request):
+    orders = Order.objects.filter(user=request.user)
+    orders_dict = {}
+    for order in orders:
+        address = order.address.fullname + " "+order.address.building_details + \
+            " "+order.address.locality_details + " "+order.address.pin_code
+        total = order.total_price
+        status = order.delivery_status
+        products_dict = {}
+        key = 1
+        for cart in order.cart.all():
+            quantity = cart.quantity
+            name = cart.product.name
+            product_price = quantity*cart.product.price_new
+            products_dict[key] = {'quantity': quantity,
+                                  'name': name,
+                                  'product_price': product_price}
+            key = key+1
+        orders_dict[order.id] = {
+            'address': address,
+            'total': total,
+            'status': status,
+            'products_dict': products_dict
+        }
+    return JsonResponse(orders_dict)
