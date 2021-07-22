@@ -1,3 +1,5 @@
+from .models import Order
+from Account.models import Address
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
@@ -60,3 +62,32 @@ def cart(request):
             return JsonResponse({'success': True})
 
     return render(request, 'Order/cart.html', {'title': 'Cart', 'Navbar': Navbar})
+
+
+@csrf_exempt
+@login_required
+def checkout(request):
+    if(request.method == 'POST'):
+        id = request.POST.get('id')
+        address = Address.objects.get(pk=id)
+        cart = Cart.objects.filter(
+            user_id=request.user, ordered=False)
+        total = 0
+        for i in cart:
+            total = total+i.product.price_new
+        print(total)
+        order = Order(
+            user=request.user,
+            address=address,
+            delivery_status='YET TO BE DISPATCHED',
+            total_price=total
+        )
+        order.save()
+        order.cart.set(cart)
+        print(order)
+        for i in cart:
+            i.ordered = True
+            i.save()
+        return JsonResponse({'message': 'Checkout Successful', 'success': True})
+
+    return render(request, 'Order/checkout.html', {'title': 'Checkout', 'Navbar': Navbar})

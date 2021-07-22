@@ -1254,3 +1254,144 @@ p.checkout-coupon input[type="submit"] {
   text-decoration: underline;
   cursor: pointer;
 }
+
+
+.payment-row{
+  display: flex;
+  flex-direction: row;
+}
+
+
+
+.your-order{
+	background: #f2f2f2 none repeat scroll 0 0;
+	padding: 30px 40px 45px;
+}
+.your-order h3{
+	border-bottom: 1px solid #d8d8d8;
+	font-size: 30px;
+	margin: 0 0 20px;
+	padding-bottom: 10px;
+	text-transform: uppercase;
+	width: 100%;
+}
+.your-order-table table{
+	background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+	border: medium none;
+	width: 100%;
+}
+.your-order-table table th, .your-order-table table td {
+	border-bottom: 1px solid #d8d8d8;
+	border-right: medium none;
+	font-size: 14px;
+	padding: 15px 0;
+	text-align: center;
+}
+.your-order-table table th{
+	border-top: medium none;
+	font-family: Montserrat,Arial,Helvetica,sans-serif;
+	font-weight: normal;
+	text-align: center;
+	text-transform: uppercase;
+	vertical-align: middle;
+	white-space: nowrap;
+	width: 250px;
+}
+.your-order-table table .shipping ul li input{
+	position: relative;
+	top: 2px;
+}
+.your-order-table table .shipping  th{
+	vertical-align: top;
+}
+.your-order-table table .order-total th{
+	border-bottom: medium none;
+	font-size: 18px;
+}
+.your-order-table table .order-total td{
+	border-bottom: medium none;
+}
+.your-order-table table tr.cart_item:hover{
+	background:#F9F9F9
+}
+.your-order-table table tr.order-total td span {
+	color: rgb(168, 3, 168);
+	font-size: 20px;
+}
+.your-order-table table{}
+.payment-method {
+    margin-top: 40px;
+}
+.payment-method .panel {
+    box-shadow: none;
+}
+.payment-method .panel-title > a {
+  color: #6f6f6f;
+}
+.payment-method .panel-default {
+    border: medium none;
+}
+.payment-method .panel-default > .panel-heading {
+    background-color: #F2F2F2;
+}
+.payment-method .panel-body.payment-content {
+    background: #f2f2f2 none repeat scroll 0 0;
+}
+.payment-method .panel-img img {
+	margin-left: 10px;
+	width: 50%;
+} 
+.order-button-payment{}
+.order-button-payment input {
+  background: #9d297e;
+  border: medium none;
+  color: #ffffff;
+  font-size: 17px;
+  font-weight: 600;
+  height: 50px;
+  margin: 20px 0 0;
+  padding: 0;
+  text-transform: uppercase;
+  transition: all 0.3s ease 0s;
+  width: 100%;
+}
+.order-button-payment input:hover{
+	background:#000
+}
+
+.product-name  {
+  color: #6f6f6f;
+  background-color: transparent;
+}
+
+.product-total{
+  color: #6f6f6f;
+  background-color: transparent;
+}
+
+.shipping > th {
+  background-color: transparent;
+  color: #6f6f6f;
+}
+
+.panel-heading{
+  background-color: #6f6f6f;
+}
+
+.panel-heading > h4{
+  font-size: medium;
+}
+
+.amount {
+  font-size: medium;
+}
+
+.cart-subtotal > th {
+  background-color: transparent;
+  color: #6f6f6f;
+}
+
+.order-total > th{
+  background-color: transparent;
+  color: #6f6f6f;
+}

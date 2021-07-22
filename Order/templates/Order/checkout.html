@@ -1,0 +1,211 @@
+{% extends 'Account/base.html' %}
+{% block content %}
+        <!------------------------------ cart items details------------------------------>
+        <div class="container">
+            <h4 class="billing-address">
+              BILLING ADDRESS
+            </h4>
+            <div class="row">
+            <form class = "col-lg-6 col-md-6 col-sm-6">
+              <div class="addressbox">
+                <h3>Choose Address</h3>
+                  <div id='addressgrid' class="col-md-12 col-sm-12 col-xs-12 addressgrid">
+                    
+                                 
+                  
+  
+                 </div>
+              </div>
+
+             <a href="{% url 'account' %}">Add address</a>
+            </form>
+            
+            <div class="col-sm-6 col-lg-6 col-md-6">
+              <div class="your-order">
+                <h3>Your order</h3>
+                <div class="your-order-table table-responsive">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th class="product-name">Product</th>
+                        <th class="product-total">Total</th>
+                      </tr>							
+                    </thead>
+                    <tbody id="cartitemsbody">
+                      <tr class="cart_item"><td class="product-name">Nayantara Circle and Scrolls Statement Ring<strong class="product-quantity"> x1</strong></td><td class="product-total"><span class="amount">₹ 399</span></td></tr>
+                    </tbody>
+                    <tfoot>
+                      <tr class="cart-subtotal">
+                        <th>Cart Subtotal</th>
+                        <td><span id="cart-subtotal-amount" class="amount"></span></td>
+                      </tr>
+                                            
+                                            
+                      <tr class="shipping">
+                        <th>Shipping</th>
+                        <td><span class="amount"><strike>₹ 100</strike>  Free</span>
+                        </td>
+                        
+                      </tr>
+                      <tr class="order-total">
+                        <th>Order Total</th>
+                        <td><strong><span id="order-total-amount" class="amount"></span></strong>
+                        </td>
+                      </tr>								
+                    </tfoot>
+                  </table>
+                </div>
+                <div class="payment-method">
+                  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="panel panel-default">
+                      <div class="panel-heading" role="tab" id="headingOne">
+                        <h4 class="panel-title">
+                          <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                          Direct Bank Transfer
+                          </a>
+                        </h4>
+                      </div>
+                      <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                        <div class="panel-body payment-content">
+                          Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won't be shipped until the funds have cleared in our account.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading" role="tab" id="headingTwo">
+                        <h4 class="panel-title">
+                          <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                          Cheque Payment
+                          </a>
+                        </h4>
+                      </div>
+                      <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                        <div class="panel-body payment-content">
+                          Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode.
+                        </div>
+                      </div>
+                    </div>
+                    <div class="panel panel-default">
+                      <div class="panel-heading" role="tab" id="headingThree">
+                        <h4 class="panel-title panel-img">
+                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        PayPal <img src="img/payment_c.png" alt="">
+                        </a>
+                        </h4>
+                      </div>
+                      <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                        <div class="panel-body payment-content">
+                          Pay via PayPal; you can pay with your credit card if you don't have a PayPal account.
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="order-button-payment">
+                    <input type="button" onclick='checkout()' value="Place order">
+                  </div>									
+                </div>
+              </div>
+            </div>
+              </div>
+          </div>
+          <script>
+            		function rendercheckout(res){
+								        cartitemsbody=document.getElementById('cartitemsbody')
+                        total = 0
+								        for(var index in res){
+                          console.log(index)
+                          cart_row = document.createElement('tr')
+                            cart_row.setAttribute('class','cart_item')
+                              cart_td=document.createElement('td')
+                              cart_td.setAttribute('class','product-name')
+                              cart_td.innerHTML=res[index]['name'] +'<strong class="product-quantity"> x'+res[index]['quantity']+'</strong>'
+                            cart_row.appendChild(cart_td)
+                            cart_td=document.createElement('td')
+                            cart_td.setAttribute('class','product-total')
+                              cart_span=document.createElement('span')
+                              cart_span.setAttribute('class','amount')
+                              cart_span.innerHTML='₹ '+res[index]['total']
+                            total = total + res[index]['total']
+                            cart_td.appendChild(cart_span)
+                            cart_row.appendChild(cart_td)
+                            cartitemsbody.appendChild(cart_row)
+									
+									}
+                  	document.getElementById('cart-subtotal-amount').innerHTML='₹ '+total
+										document.getElementById('order-total-amount').innerHTML='₹ '+total
+								}
+							
+              getcart_url="{% url 'getcart' %}"
+							function getcheckoutcart () {
+											jQuery.ajax({
+												url:getcart_url,
+												type:'GET',
+												success: function(res) {
+                          console.log(res)
+													rendercheckout(res)
+													}})
+										
+										}
+							getcheckoutcart()
+
+
+            address_url="{% url 'address' %}"
+            function getaddress(){
+                      addressgrid=document.getElementById('addressgrid')
+                       $.ajax({
+                           url:address_url,
+                            type:'GET',
+                            success:function(res){
+                                for(var k in res){
+                                    address_div = document.createElement('div')
+                                    address_div.setAttribute('class','col-md-6 col-sm-6 col-xs-12 multiple_address')
+                                    address_label = document.createElement('label')
+                                    address_label.setAttribute('class',"radio-inline")
+                                    address_label.innerHTML="<input type='radio' name='inlineRadioOptions' id=inlineRadio1 value="+res[k].id+">"+res[k].fullname+" <br>Phone: "+res[k].mobile_no+"<br>"+res[k].building_details+"<br>"+res[k].locality_details+"<br>"+res[k].state+" "+res[k].pin_code
+                                    address_div.appendChild(address_label)
+                                    addressgrid.appendChild(address_div)  
+                                }
+                                
+                            }
+                       })
+                   }
+                   getaddress()
+            checkout_url = "{% url 'checkout' %}"
+            user_url = "{% url 'account' %}"
+            function checkout(){
+								id=$('input[name=inlineRadioOptions]:checked').val()
+								if(id==null){
+                    document.getElementById('modelmessage').innerHTML="No Address Selected"
+                    document.getElementById('trueimage').style.display='none'
+                    document.getElementById('falseimage').style.display='block'
+                    $("#exampleModalCenter").modal();
+                
+								}else{
+								jQuery.ajax({
+									url:checkout_url,
+									type:'POST',
+									data:{
+										'id':id
+									},
+									success:function(res){
+                    document.getElementById('modelmessage').innerHTML=res.message
+                                if(res.success){
+                                    document.getElementById('trueimage').style.display='block'
+                                    document.getElementById('falseimage').style.display='none'
+                                }else{
+                                    document.getElementById('trueimage').style.display='none'
+                                    document.getElementById('falseimage').style.display='block'
+                                }
+                                document.getElementById('modalclosebutton').setAttribute('onclick','window.location.href='+user_url)
+                                $("#exampleModalCenter").modal();
+                                console.log(res)
+									}
+
+								})
+								}
+								
+              }
+
+          </script>
+        <!----------------------------------footer------------------------------------->
+{% endblock %}
