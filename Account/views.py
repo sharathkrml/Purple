@@ -1,3 +1,8 @@
+from django.conf import settings
+from django.core.mail import send_mail
+import pyotp
+import base64
+import random
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.password_validation import validate_password
 from django.core.validators import validate_email
@@ -15,6 +20,75 @@ from Product.views import Navbar
 
 
 ''''''
+key = random.randint(1, 999999)
+
+
+@csrf_exempt
+def forgot(request):
+    if(request.POST.get('userdata')):
+        key2 = random.randint(1, 999999)
+        request.session['key2'] = key2
+        userdata = request.POST.get('userdata')
+        if('@' in userdata):
+            user = CustomUser.objects.filter(email=userdata).first()
+        else:
+            user = CustomUser.objects.filter(phone=userdata).first()
+
+        if(user == None):
+            messages.warning(request, f'No Such User')
+            return redirect('forgot')
+        else:
+            request.session['email'] = user.email
+            return redirect('verify')
+    return render(request, 'Account/forgotPassword.html', {'title': 'Forgot Password'})
+
+
+@csrf_exempt
+def verify(request):
+    totp = pyotp.HOTP('base32secret3232')
+    key2 = request.session['key2']
+    send_mail('password reset', 'jewelery website password reset otp='+str(totp.at(key2)),
+              settings.EMAIL_HOST_USER, [request.session['email']], fail_silently=False)
+    print(totp.at(key2))
+    if request.method == "POST":
+        for key, value in request.session.items():
+            print('{} => {}'.format(key, value))
+        otp = request.POST['Otpinput']
+        if(totp.verify(otp, key2)):
+            request.session['otp'] = otp
+            return redirect('reset')
+        else:
+            messages.warning(request, f'Invalid otp')
+            return redirect('verify')
+    return render(request, 'Account/verifyOTP.html', {'title': 'Verify OTP', 'Navbar': Navbar})
+
+
+@csrf_exempt
+def reset(request):
+    if(request.method == 'POST'):
+        password1 = request.POST.get('password1')
+        password2 = request.POST.get('password2')
+        if(password2 == password1):
+            try:
+                validate_password(password1)
+            except ValidationError as e:
+                message = list(e)
+                messages.warning(request, message[0])
+            else:
+                totp = pyotp.HOTP('base32secret3232')
+                key2 = request.session['key2']
+                otp = request.session['otp']
+                if(totp.verify(otp, key2)):
+                    user = CustomUser.objects.filter(
+                        email=request.session.get('email')).first()
+                    user.set_password(password1)
+                    user.save()
+                    messages.success(request, f'Succesfully changed password')
+                    return redirect('login')
+                else:
+                    messages.warning(request, f'Passwords dont match')
+                    return redirect('reset')
+    return render(request, 'Account/resetPassword.html', {'title': 'Reset Password', 'Navbar': Navbar})
 
 
 def validate_phone(s):
@@ -126,7 +200,7 @@ def account(request):
                 return JsonResponse({'message': 'Invalid Phone', 'success': False})
         else:
             return JsonResponse({'message': 'Enter all details', 'success': False})
-    return render(request, 'Account/myaccount.html', {'title': request.user.name, 'Navbar': Navbar})
+    return render(request, 'Account/myaccount.html', {'title': request.user.name.title(), 'Navbar': Navbar})
 
 
 @csrf_exempt

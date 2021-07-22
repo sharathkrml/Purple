@@ -59,4 +59,4 @@ def cart(request):
             cart_object.save()
             return JsonResponse({'success': True})
 
-    return render(request, 'Order/cart.html', {'Navbar': Navbar})
+    return render(request, 'Order/cart.html', {'title': 'Cart', 'Navbar': Navbar})

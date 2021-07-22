@@ -123,3 +123,15 @@ USE_TZ = True
 STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'Account.CustomUser'
 LOGIN_URL = 'login'
+
+
+# Host for sending e-mail.
+EMAIL_HOST = 'smtp.gmail.com'
+
+# Port for sending e-mail.
+EMAIL_PORT = 587
+
+# Optional SMTP authentication information for EMAIL_HOST.
+EMAIL_HOST_USER = 'sharathkrml@gmail.com'
+EMAIL_HOST_PASSWORD = 'axacybflwsczfjwo'
+EMAIL_USE_TLS = True

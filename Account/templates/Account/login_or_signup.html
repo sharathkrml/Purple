@@ -20,7 +20,7 @@
                                 <input type="text" id='login_phone_or_email' name='login_phone_or_email' value="{{login_data.login_phone_or_email}}" placeholder="phone no or email">
                                 <input type="password" id='login_password' name='login_password' placeholder="password">
                                 <button  type="submit" class="btn">Login</button>
-                                <a href="">Forgot password</a>
+                                <a href="{% url 'forgot' %}">Forgot password</a>
                             </form>
                             
                             <form id="RegForm"  action='' method='post'>

@@ -1,0 +1,23 @@
+{% extends 'Account/base.html' %}
+{% block content %}
+        <!------------------------------ customer details------------------------------>
+		<div style="margin: auto; width: 60%; padding: 10px;" class="main-container">
+		<span id='notice' class="account-header">Enter OTP </span>
+       <div  class="container">
+            <div  class="reset-input" >
+            
+                <div class="reset" id="reset">
+                    <div class="Otp-input"><form action="" method="POST">
+                        <span class="Otp-text">OTP</span>
+                        <input id='Otpinput' name='Otpinput' class="Otpinput" type="text">
+                    </div>    
+                <button class="btn" type="submit">Submit</button>
+                </form>
+                </div>
+            </div>
+        <div class="secondContainer">
+        </div>
+    </div>
+		</div>
+        <!----------------------------------footer------------------------------------->
+ {% endblock %}
