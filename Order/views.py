@@ -31,36 +31,38 @@ def getcart(request):
 
 
 @csrf_exempt
-@login_required
 def cart(request):
-    if(request.user.is_authenticated):
-        if(request.POST.get('product_id')):  # add to cart
-            product_id = request.POST.get('product_id')
-            product = Product.objects.get(pk=product_id)
-            quantity = request.POST.get('quantity')
-            if(len(Cart.objects.filter(product=product, user=request.user, ordered=False)) == 0):
-                # checks if there is an entry,if no
-                new = Cart(user=request.user,
-                           product=product,
-                           quantity=quantity, ordered=False)
-                new.save()
-            else:
-                old_object = Cart.objects.filter(
-                    product=product, user_id=request.user, ordered=False).first()
-                old_object.quantity = old_object.quantity + int(quantity)
-                old_object.save()
-            return JsonResponse({'message': 'Item Added To Cart', 'success': True})
-        if(request.POST.get('delete_id')):  # delete from cart
-            cart_object = Cart.objects.get(pk=request.POST['delete_id'])
-            cart_object.delete()
-            return JsonResponse({'message': 'Item Deleted From Cart', 'success': True})
-        if(request.POST.get('update_id')):  # delete from cart
-            quantity = request.POST.get('quantity')
-            cart_object = Cart.objects.get(pk=request.POST['update_id'])
-            cart_object.quantity = quantity
-            cart_object.save()
-            return JsonResponse({'success': True})
-
+    if(request.method == 'POST'):
+        if(request.user.is_authenticated):
+            print(request.user)
+            if(request.POST.get('product_id')):  # add to cart
+                product_id = request.POST.get('product_id')
+                product = Product.objects.get(pk=product_id)
+                quantity = request.POST.get('quantity')
+                if(len(Cart.objects.filter(product=product, user=request.user, ordered=False)) == 0):
+                    # checks if there is an entry,if no
+                    new = Cart(user=request.user,
+                               product=product,
+                               quantity=quantity, ordered=False)
+                    new.save()
+                else:
+                    old_object = Cart.objects.filter(
+                        product=product, user_id=request.user, ordered=False).first()
+                    old_object.quantity = old_object.quantity + int(quantity)
+                    old_object.save()
+                return JsonResponse({'message': 'Item Added To Cart', 'success': True})
+            if(request.POST.get('delete_id')):  # delete from cart
+                cart_object = Cart.objects.get(pk=request.POST['delete_id'])
+                cart_object.delete()
+                return JsonResponse({'message': 'Item Deleted From Cart', 'success': True})
+            if(request.POST.get('update_id')):  # delete from cart
+                quantity = request.POST.get('quantity')
+                cart_object = Cart.objects.get(pk=request.POST['update_id'])
+                cart_object.quantity = quantity
+                cart_object.save()
+                return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'message': 'Login First', 'success': False})
     return render(request, 'Order/cart.html', {'title': 'Cart', 'Navbar': Navbar})
 
 
