@@ -262,56 +262,53 @@
             
             </div>
             <div class="cartContent" id="cart-content">
-                <table >
+                <table id='ordershistory' >
                     <tr>
                         <th>Product</th>
-                        <th>Quantity</th>
+                        <th>Unit Price</th>
                         <th>Subtotal</th>
+                        <th>Address</th>
+                        <th>Status</th>
                     </tr>
-                    <tr>
-                        <td>
-                            <div class="cart-info">
-                                <img src="https://cdn.igp.com/f_auto,q_auto,t_prodm/products/p-personalized-love-you-box-for-anniversary-133462-m.jpg">
-                                <div>
-                                    <p>Red Printed T-Shirt</p>
-                                    <small>Price: $50.00</small><br>
-                                    <a href="">Remove</a>
-                                </div>
-                            </div>
-                        </td>
-                        <td><input type="number" value="1"></td>
-                        <td>$50.00</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="cart-info">
-                                <img src="https://stylesatlife.com/wp-content/uploads/2018/05/Bunch-of-Gourmets-Birthday-Gifts.jpeg">
-                                <div>
-                                    <p>Red Printed T-Shirt</p>
-                                    <small>Price: $50.00</small><br>
-                                    <a href="">Remove</a>
-                                </div>
-                            </div>
-                        </td>
-                        <td><input type="number" value="1"></td>
-                        <td>$50.00</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="cart-info">
-                                <img src="https://5.imimg.com/data5/TV/LU/KF/SELLER-11481305/wedding-anniversary-engraved-crystal-photo-frame-500x500.JPG">
-                                <div>
-                                    <p>Red Printed T-Shirt</p>
-                                    <small>Price: $50.00</small><br>
-                                    <a href="">Remove</a>
-                                </div>
-                            </div>
-                        </td>
-                        <td><input type="number" value="1"></td>
-                        <td>$50.00</td>
-                    </tr>
+                    
+                    
                     </table>
             </div>
+            <script>
+                getorderdetails = "{% url 'getorderdetails' %}"
+                function getorders(){
+                    $.ajax({
+                    url :getorderdetails,
+                    type:'get',
+                    success:function(res){
+                        ordershistory=document.getElementById('ordershistory')
+                        for(var k in res){
+                            console.log(res[k])
+                            namestring=''
+                            pricestring = ''
+                            for (var i in res[k].products_dict){
+                                namestring = namestring+"<p>"+res[k].products_dict[i].name +" x " +res[k].products_dict[i].quantity+"</p>"
+                                pricestring = pricestring+"<p>"+res[k].products_dict[i].product_price+"</p>"
+                            }
+                            order_tr = document.createElement('tr')
+                            name_td = document.createElement('td')
+                            name_div = document.createElement('div')
+                                name_div.innerHTML = namestring
+                            name_td.appendChild(name_div)
+
+                            price_td = document.createElement('td')
+                            price_div = document.createElement('div')
+                                price_div.innerHTML = pricestring
+                            price_td.appendChild(price_div)
+                            order_tr.appendChild(name_td)
+                            order_tr.appendChild(price_td)
+                            order_tr.innerHTML = order_tr.innerHTML+"<td> ₹"+res[k].total+"</td><td>"+res[k].address+"</td><td>"+res[k].status+"</td>"
+                            ordershistory.appendChild(order_tr)
+                        }
+                    }
+                })    }    
+                getorders()
+            </script>
 		</div>
         <div class="secondContainer">
         </div>

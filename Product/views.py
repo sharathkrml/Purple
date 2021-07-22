@@ -47,10 +47,10 @@ def getRandomProduct(number):
 
 
 def product(request, slug):
-    print(Product.objects.filter(slug=slug))
+    print(Product.objects.filter(slug=slug).first().id)
     product = Product.objects.filter(slug=slug).first()
     if(product.price != product.price_new):
-        product_dict = {'name': product.name, 'description': product.description,
+        product_dict = {'id': product.id, 'name': product.name, 'description': product.description,
                         'category': product.category, 'imageurl': product.imageurl,
                         'price': product.price, 'price_new': product.price_new}
     else:
