@@ -119,7 +119,7 @@ def login(request):
                     request, phone=login_phone_or_email, password=login_password)
                 if user != None:
                     user_login(request, user)
-                    return redirect('account')
+                    return redirect('home')
 
                 else:
                     messages.warning(request, f'Invalid Credentials')
