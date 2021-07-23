@@ -20,7 +20,7 @@
             function renderProducts(obj){
                  products_body=document.getElementById('product-list')
                 product_li = document.createElement('li')
-                product_li.innerHTML="<div class='col-4'><a href="+product_url+obj.pro_slug+"><img src="+obj.imageurl+"></a><a href="+product_url+obj.image_slug+"><h4>"+obj.name+"</h4></a><p>₹ "+obj.price_new+"</p></div>"
+                product_li.innerHTML="<div class='col-4'><a href="+product_url+obj.pro_slug+"><img src="+obj.imageurl+"></a><a href="+product_url+obj.pro_slug+"><h4>"+obj.name+"</h4></a><p>₹ "+obj.price_new+"</p></div>"
                 products_body.appendChild(product_li)
                 
             }
