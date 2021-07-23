@@ -47,7 +47,7 @@ def forgot(request):
 def verify(request):
     totp = pyotp.HOTP('base32secret3232')
     key2 = request.session['key2']
-    send_mail('password reset', 'jewelery website password reset otp='+str(totp.at(key2)),
+    send_mail('Purple password reset', 'Purple password reset otp='+str(totp.at(key2)),
               settings.EMAIL_HOST_USER, [request.session['email']], fail_silently=False)
     print(totp.at(key2))
     if request.method == "POST":
