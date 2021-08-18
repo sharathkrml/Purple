@@ -36,8 +36,9 @@ category_list = ['Birthday',
                  'Perfumes',
                  'Sweets']
 for k in category_list:
-    Cat = Category.objects.create(name=k)
-    print(Cat)
+    if(len(Category.objects.filter(name=k))==0):
+        Cat = Category.objects.create(name=k)
+        print(Cat)
 
 for i in path_list:
     csv_path = os.path.join(os.path.dirname(__file__), i)
@@ -45,12 +46,13 @@ for i in path_list:
     for j in range(All.shape[0]):
         category = i[:-4]
         Cat = Category.objects.filter(name=category).first()
-        p = Product(
-            category=Cat,
-            name=All['name'][j],
-            description=All['description'][j],
-            imageurl=All['imageurl'][j],
-            price=All['price'][j],
-            price_new=All['price_new'][j])
-        p.save()
-        print(p)
+        if(len(Product.objects.filter(name=All['name'][j]))==0):
+            p = Product(
+                category=Cat,
+                name=All['name'][j],
+                description=All['description'][j],
+                imageurl=All['imageurl'][j],
+                price=All['price'][j],
+                price_new=All['price_new'][j])
+            p.save()
+            print(p)
