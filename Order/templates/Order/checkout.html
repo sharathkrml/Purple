@@ -61,44 +61,75 @@
                       <div class="panel-heading" role="tab" id="headingOne">
                         <h4 class="panel-title">
                           <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                          Direct Bank Transfer
+                          Debit Card
                           </a>
                         </h4>
                       </div>
                       <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                        <div class="panel-body payment-content">
-                          Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won't be shipped until the funds have cleared in our account.
-                        </div>
+                        <label  style="margin-left:20px"  for="name_on_card"
+													>Name on card
+													<input style="width:200px; border:1px solid rgb(170, 169, 169); border-radius:5px;margin-top:10px;margin-left:20px;margin-bottom:10px; background-color:#EFEFEF " type="text" name="name_on_card" id="name_on_card" /> </label
+												  ><br />
+												  <label style="margin-left:20px" for="card_number">Card Number </label>
+												  <input
+													id="card_number"
+													type="tel"
+													inputmode="numeric"
+													name="card_number"
+													pattern="[0-9\s]{13,19}"
+													maxlength="19"
+													placeholder="xxxx xxxx xxxx xxxx"
+													style="width:200px; border:1px solid rgb(170, 169, 169); border-radius:5px;margin-top:10px;margin-left:20px;margin-bottom:10px; background-color:#EFEFEF;"
+												  />
+												  <br />
+												  <label style="margin-left:20px">Expiry date</label>
+												  <select  style="margin-left:35px; border-radius:5px;" name="expireMM" id="expireMM">
+													<option value="">Month</option>
+													<option value="01">January</option>
+													<option value="02">February</option>
+													<option value="03">March</option>
+													<option value="04">April</option>
+													<option value="05">May</option>
+													<option value="06">June</option>
+													<option value="07">July</option>
+													<option value="08">August</option>
+													<option value="09">September</option>
+													<option value="10">October</option>
+													<option value="11">November</option>
+													<option value="12">December</option>
+												  </select>
+												  <select  style="margin-left:10px;border-radius:5px; margin-top:10px; margin-bottom:10px" name="expireYY" id="expireYY">
+													<option value="">Year</option>
+													<option value="21">2021</option>
+													<option value="22">2022</option>
+													<option value="23">2023</option>
+													<option value="24">2024</option>
+													<option value="25">2025</option>
+												  </select>
+												  <br />
+												  <label  style="margin-left:20px"  for="cvv"
+													>CVV
+													<input style="width:200px; border:1px solid rgb(170, 169, 169); padding-left:10px; border-radius:5px;margin-top:10px;margin-left:20px;margin-bottom:10px; background-color:#EFEFEF " type="tel" name="cvv" id="cvv" /> </label>
+                          <br />
+												</div>
                       </div>
                     </div>
                     <div class="panel panel-default">
                       <div class="panel-heading" role="tab" id="headingTwo">
                         <h4 class="panel-title">
                           <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                          Cheque Payment
+                          Pay On Delivery
                           </a>
                         </h4>
                       </div>
                       <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                        <div class="panel-body payment-content">
-                          Please send your cheque to Store Name, Store Street, Store Town, Store State / County, Store Postcode.
-                        </div>
+                        <div class="panel-body payment-content" style="width:100%; display:flex; flex-direction:row; align-items:center;justify-content:space-between;">
+													<span style="position:left; font-weight:bold">PAY ON DELIVERY</span>
+													<input type="radio"/>
+												</div>
                       </div>
                     </div>
-                    <div class="panel panel-default">
-                      <div class="panel-heading" role="tab" id="headingThree">
-                        <h4 class="panel-title panel-img">
-                        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                        PayPal <img src="img/payment_c.png" alt="">
-                        </a>
-                        </h4>
-                      </div>
-                      <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                        <div class="panel-body payment-content">
-                          Pay via PayPal; you can pay with your credit card if you don't have a PayPal account.
-                        </div>
-                      </div>
-                    </div>
+                    
                   </div>
                   <div class="order-button-payment">
                     <input type="button" onclick='checkout()' value="Place order">
